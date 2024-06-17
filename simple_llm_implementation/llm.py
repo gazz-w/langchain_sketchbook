@@ -21,13 +21,29 @@ llm = ChatOpenAI(
 # Prompt Template
 prompt = ChatPromptTemplate.from_template("me conte uma piada de {subject}")
 
+# Prompt Template with messages
+prompt2 = ChatPromptTemplate.from_messages([
+    ("system", "you are an AI chef. Create a unique recipe base on the follow main ingridients"),
+    ("user", "{input}")
+])
+
 # Create a LLM Chain
 chain = prompt | llm
 
 response = chain.invoke({"subject": "pintinho"})
+# parser.invoke(response) is the same as response.content
 result = parser.invoke(response)
 
-print(result)
+print(response.content)
+print("\n-----------------------------------\n")
+
+# Create a LLM Chain to second prompt
+chain2 = prompt2 | llm
+
+response2 = chain2.invoke({"input": "rice"})
+result2 = parser.invoke(response2)
+
+print(result2)
 
 
 # MODELO INVOKE
