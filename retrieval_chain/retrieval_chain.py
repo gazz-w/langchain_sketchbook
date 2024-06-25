@@ -10,6 +10,8 @@ from langchain.chains import create_retrieval_chain
 from dotenv import load_dotenv
 load_dotenv()
 
+#  Retrieves documents from the web using the provided URL.
+
 
 def get_documents_from_web(url):
     loader = WebBaseLoader(url)
@@ -22,11 +24,15 @@ def get_documents_from_web(url):
     splitDocs = splitter.split_documents(docs)
     return splitDocs
 
+# create a vector database of documents
+
 
 def create_db(docs):
     embedding = OpenAIEmbeddings()
     vectorStore = faiss.FAISS.from_documents(docs, embedding=embedding)
     return vectorStore
+
+# Create a chain that retrieves the answer to the user's question
 
 
 def create_chain(vectorStore):
